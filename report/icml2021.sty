@@ -1,4 +1,4 @@
-% File: icml2020.sty (LaTeX style file for ICML-2020, version of 2020-12-17)
+% File: icml2021.sty (LaTeX style file for ICML-2021, version of 2020-11-18)
 
 % This file contains the LaTeX formatting parameters for a two-column 
 % conference proceedings that is 8.5 inches wide by 11 inches high.  
@@ -61,13 +61,13 @@
 %% final/accepted version prints an ``Appearing in'' note.  To get the
 %% latter behavior, in the calling file change the ``usepackage'' line
 %% from:
-%%	\usepackage{icml2020}
+%%	\usepackage{icml2021}
 %% to
-%%	\usepackage[accepted]{icml2020}
+%%	\usepackage[accepted]{icml2021}
 %%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{icml2020}[2020/12/17 v2.0 ICML Conference Style File]
+\ProvidesPackage{icml2021}[2020/11/18 v2.0 ICML Conference Style File]
 
 % Before 2018, \usepackage{times} was in the example TeX, but inevitably
 % not everybody did it.
@@ -96,7 +96,7 @@
   \hypersetup{ %
     pdftitle={},
     pdfauthor={},
-    pdfsubject={Proceedings of the International Conference on Machine Learning 2020},
+    pdfsubject={},
     pdfkeywords={},
     pdfborder=0 0 0,
     pdfpagemode=UseNone,
@@ -117,10 +117,11 @@
 % final/accepted version of the ``appearing in'' note.  Modify it to
 % change that text.
 %%%%%%%%%%%%%%%%%%%%
-\newcommand{\ICML@appearing}{\textit{Proceedings of the
-$\mathit{37}^{th}$ International Conference on Machine Learning},
-Online, PMLR 119, 2020.
-Copyright 2020 by the author(s).}
+% \newcommand{\ICML@appearing}{\textit{Proceedings of the
+% $\mathit{38}^{th}$ International Conference on Machine Learning},
+%  PMLR 139, 2021.
+% Copyright 2021 by the author(s).}
+
 
 %%%%%%%%%%%%%%%%%%%%
 % This string is printed at the bottom of the page for the draft/under
@@ -440,14 +441,14 @@ the offending package(s), or layout-changing commands and try again.
 \fi
 }
 
-%\newcommand{\icmlauthor}[2]{%
-%\addtofullauthorlist{#1}%
-%#1\@for\theaffil:=#2\do{\pa{\theaffil}}%
-%}
+% \newcommand{\icmlauthor}[2]{%
+% \addtofullauthorlist{#1}%
+% #1\@for\theaffil:=#2\do{\pa{\theaffil}}%
+% }
 \newcommand{\icmlauthor}[2]{%
   \ifdefined\isaccepted
     \mbox{\bf #1}\,\@for\theaffil:=#2\do{\@pa{\theaffil}} \addtofullauthorlist{#1}%
-   \else
+  \else
     \ifdefined\@icmlfirsttime
     \else
       \gdef\@icmlfirsttime{1}
@@ -511,7 +512,7 @@ the offending package(s), or layout-changing commands and try again.
 \ifdefined\icmlcorrespondingauthor@text
 Correspondence to: \icmlcorrespondingauthor@text.
 \else
-{\bf AUTHORERR: Missing \textbackslash{}icmlcorrespondingauthor.}
+% {\bf AUTHORERR: Missing \textbackslash{}icmlcorrespondingauthor.}
 \fi
 
 \ \\

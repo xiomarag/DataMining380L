@@ -1,0 +1,208 @@
+%%%%%%%% ICML 2021 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs} % for professional tables
+
+% hyperref makes hyperlinks in the resulting PDF.
+% If your build breaks (sometimes temporarily if a hyperlink spans a page)
+% please comment out the following usepackage line and replace
+% \usepackage{icml2021} with \usepackage[nohyperref]{icml2021} above.
+\usepackage{hyperref}
+
+% Attempt to make hyperref and algorithmic work together better:
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Use the following line for the initial blind version submitted for review:
+% \usepackage{icml2021}
+
+% If accepted, instead use the following line for the camera-ready submission:
+\usepackage[accepted]{icml2021}
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Data Mining 380L Project Outline}
+
+\begin{document}
+
+\twocolumn[
+\icmltitle{Data Mining 380L Project Outline \\
+           Predicting Flight Delays for "Core 30" Airports}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2021
+% package.
+
+% List of affiliations: The first argument should be a (short)
+% identifier you will use later to specify author affiliations
+% Academic affiliations should list Department, University, City, Region, Country
+% Industry affiliations should list Company, City, Region, Country
+
+% You can specify symbols, otherwise they are numbered in order.
+% Ideally, you should not use this facility. Affiliations will be numbered
+% in order of appearance and this is the preferred way.
+% \icmlsetsymbol{equal}{*}
+
+\begin{icmlauthorlist}
+\icmlauthor{Tracy Liu (yl36576),}{bme}
+\icmlauthor{Mengkun Chen (mc72527),}{bme}
+\icmlauthor{Feng-I Hsieh (fh5934),}{bme}
+\icmlauthor{Xiomara Gonzalez (xtg59)}{ece}
+
+\end{icmlauthorlist}
+
+\icmlaffiliation{bme}{Department of Biomedical Engineering, University of Texas at Austin, Austin, Texas}
+\icmlaffiliation{ece}{Department of Electrical and Computer Engineering, University of Texas at Austin, Austin, Texas}
+
+% \icmlcorrespondingauthor{Cieua Vvvvv}{c.vvvvv@googol.com}
+% \icmlcorrespondingauthor{Eee Pppp}{ep@eden.co.uk}
+
+% You may provide any keywords that you
+% find helpful for describing your paper; these are used to populate
+% the "keywords" metadata in the PDF but will not be shown in the document
+%\icmlkeywords{Machine Learning, ICML}
+
+\vskip 0.3in
+]
+
+% this must go after the closing bracket ] following \twocolumn[ ...
+
+% This command actually creates the footnote in the first column
+% listing the affiliations and the copyright notice.
+% The command takes one argument, which is text to display at the start of the footnote.
+% The \icmlEqualContribution command is standard text for equal contribution.
+% Remove it (just {}) if you do not need this facility.
+
+\printAffiliationsAndNotice{}  % leave blank if no need to mention equal contribution
+% \printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
+
+% \begin{abstract}
+% This document provides a basic paper template and submission guidelines.
+% Abstracts must be a single paragraph, ideally between 4--6 sentences long.
+% Gross violations will trigger corrections at the camera-ready phase.
+% \end{abstract}
+
+\section{Introduction}
+\label{introduction}
+The aviation industry plays one of the most crucial roles in the world’s transportation sector and is one of the main drivers behind globalization. In 2019 alone, an estimated 926 million passengers were transported by United States (U.S.) airlines, which was a significant increase from previous years \cite{1_num_passengers_2019}. Such rapid growth puts pressure on the infrastructure that currently struggles to keep up with demand. Flight delays, in particular, increase non-linearly as demand approaches the capacity in the system, and without an adaptable infrastructure, delays will continue to be a pressing matter \cite{2_bell_2010}.
+
+In the U.S., a flight is considered to be delayed when its departure or arrival time is greater than 15 minutes than the scheduled flight departure and arrival time, respectively \cite{3_bts_data}. The corresponding airport where the delay occurs will depend on whether it was a departure delay or an arrival delay. The U.S. Federal Aviation Administration (FFA) attributes delays of commercially scheduled flights to five broad categories: air carriers, extreme weather conditions, national aviation system, security, or late-arriving aircraft that cause subsequent flights to depart late \cite{4_dep_transportation}. The U.S. Bureau of Transportation Statistics (BTS) reported that from January to December 2019, approximately 19\% of arriving flights in the “Core 30” airports across the U.S. were delayed \cite{3_bts_data, 5_faa_core30}.
+
+Flight delays have a broad impact that can be detrimental to multiple entities. Passengers experience longer travel times and may see an increase in their expenses for food and lodging. In fact, the FAA estimated that flight delays accounted for a total cost of 33 billion USD in 2019, with passengers incurring 55\% of that expense \cite{6_faa_cost_delay2019}. Airlines experience the ramifications of flight delays through additional costs for crew and aircraft scheduling modifications. Airlines also risk losing the business of customers who respond to delays by switching to competitors. The environmental and economic losses are also apparent. A 2008 study conducted by the U.S. Joint Economic Committee reported that commercial aircrafts burned an estimated 740 million gallons of excess jet fuel due to record flight delays, amounting to a total cost of 1.6 billion USD, and released an additional 7.1 metric tons of climate-disrupting carbon monoxide into the atmosphere \cite{7_jec_cost_dealy}. Thus, it is imperative that techniques, including statistical modeling, be used to provide insights on flight operations and provide solutions to decrease delays.
+
+In our study, we compare three classifiers’ ability to predict whether a flight will be delayed or not, using [-$\infty$, 15 minutes] to indicate no delay and [15 minutes, +$\infty$] to indicate a delay. We also use multiple linear regression to estimate the arrival delays for flights by the minute.
+
+
+\section{Related Work}
+\label{relatedwork}
+Past research efforts to model and predict flight delays have been motivated by their inevitability and significant economic and environmental impact. Rebollo and Balakrishnan proposed a model that considered both temporal and spatial variables and focused on flight data for 100 of the most delayed routes representative of the entire National Airspace System to predict departure delays 2-24 hours in advance \cite{8_rebollo_2014}. Another study conducted by Chakrabarty analyzed flight information for U.S. domestic flights operated by American Airlines in 5 of the busiest U.S. airports using Grid Search on a Gradient Boosting Classifier model and predicted whether a flight would be delayed or not with an accuracy of 85.73\% \cite{9_chakrabarty_2019}. Ding proposed a method to model the flight delay problem as a classification with two classes and compared it to a Naive-Bayes and C4.5 decision tree approach using 2015-2016 data from commercial flights in China \cite{10_ding_2017}. One of the most recent studies by Yazdi \emph{et al}. leveraged deep learning in conjunction with the Levenberg-Marquart algorithm and a stacked denoising autoencoder to tackle the issues that come with the high complexity level of flight data \cite{11_yazdi_2020}. Because of our recent exposure and novice experience with data mining techniques, we decided to consider three classification approaches to predict whether a flight is delayed or not and a multiple linear regression approach to estimate the delay time to the minute. We aim to contribute updated insights with more recent data on U.S. flights that reflect the growth and demand for air travel.
+
+
+\section{Dataset}
+\label{dataset}
+All the data are from the Kaggle competition -- \textit{2019 Airlines Delays w/Weather and Airport Detail}. The data includes airport and airline information (e.g., location coordinates, carrier, employee data). It also includes extensive flight information including, but not limited to: date, departure and arrival airport, departure and arrival time, cancellation status, flight distance, reasons for delay (if applicable), and weather conditions. Pre-combined training and test datasets are provided for us; however, we will be using the raw data to compile our own test and training datasets.
+
+According to the Kaggle competition, it should be noted that raw data for weather include only the top 90\%  of airports for passenger traffic and all weather data was downloaded manually. Data for 2019 is included on a month-by-month basis and additional data is provided for the first 3 months of 2020. The entire 2019 dataset contains ~6.5 million entries and the 2020 dataset contains ~1.4 million entries.
+
+Kaggle Data was sourced from the following:\\
+\href{https://www.transtats.bts.gov/databases.asp?Z1qr_VQ=E&Z1qr_Qr5p=N8vn6v10&f7owrp6_VQF=D}{Bureau of Transportation Statistics}\\
+\href{https://www.ncdc.noaa.gov/cdo-web/datasets}{National Centers for Environmental Information (NOAA)}
+
+More details regarding the Kaggle competition can be found in: \href{https://www.kaggle.com/threnjen/2019-airline-delays-and-cancellations?select=raw_data_documentation.txt}{2019 Airline Delays w/Weather and Airport Detail}
+
+
+\section{Data Preprocessing}
+\label{datapreprocessing}
+
+\subsection{Summary}
+\begin{enumerate}
+\itemsep0em
+\item Missing value - If missing value is less than 1\%, ignore record or attributes
+\item Outliers - Filter data points that are outside 3 sigma (Need to be careful, adjust according to correlation result)
+\item Data description - Number of flights per company, mean delay at origin, departure delay distribution of each company
+\item Filtering - Select data pertaining to "Core 30" airports as defined by the FAA and consider the top routes that are prone to have a significant number of delays
+\end{enumerate}
+
+\subsection{One Hot Encoding}
+This dataset includes features such as the names of departure and arrival airports and airlines that do not necessarily have a numerical representation. As a pre-processing step, we will utilize common encoding schemes for categorical data such as ordinal and one-hot encoding. Ordinal encoding schemes work by assigning each unique category an integer value, whereas one-hot encoding takes it a step further and uses a binary variable where each bit represents a category and can be 'on' or 'off'.
+
+\subsection{Correlation}
+The performance of some algorithms can deteriorate if two or more variables are tightly related, called multicollinearity. An example is linear regression, where one of the offending correlated variables should be removed in order to improve the skill of the model. We may also be interested in the correlation between input variables with the output variable in order to provide insight into which variables may or may not be relevant as input for developing a model. 
+Correlation can be determined through multiple methods (e.g., scatter diagram method, Pearson's Correlation, Spearman's Correlation).
+Some of the possible correlation we want to look into: departure airport and delay status, departure date and delays, arrival airport and delay status, weather condition and delay status.
+
+\subsection{Scaling}
+Scaling is applied to independent variables or features of data, and can help normalize the data within a particular range. We can also leverage scaling to help with speeding up calculations in an algorithm. The raw dataset contains features that highly vary in magnitudes, units, and range. Normalization should be performed when the scale of a feature is irrelevant or misleading and should not normalize when the scale is meaningful.
+\begin{enumerate}
+\itemsep0em
+\item Standardization - Scales each input variable separately by subtracting the mean (called centering) and dividing by the standard deviation to shift the distribution to have a mean of zero and a standard deviation of one.
+\item Normalization - Scales each input variable separately to the range 0-1, so that all values are within the new range of 0 and 1.
+\end{enumerate}
+
+\subsection{Feature Selection and Extraction}
+Both feature selection and feature extraction are used for dimensionality reduction, which is key to reducing model complexity and overfitting.
+\begin{enumerate}
+\itemsep0em
+\item Feature selection (Selected features may based on the correlation result), i.e. SelectKBest, RFE.
+\item Feature extraction, i.e. PCA, KPCA, LDA.
+\end{enumerate}
+All the steps listed in the data pre-processing will be adjusted according to the analysis results we get from the implementation process. This should be an iterative process till we think we find the best way to process the data.
+
+\section{Prediction}
+\label{prediction}
+
+\subsection{Classification}
+After dealing with data preprocessing. The first goal is to predict whether the departure/arrival time of a flight will be delayed or not. Since the given data is already labeled. We can easily train the classifier and then do the prediction. Three classifiers will be implemented iteratively to find out which one suits the best according to the prediction results and the performance of the classifiers through confusion matrices.
+\begin{enumerate}
+\itemsep0em
+\item Random Forest Classification
+\item K Nearest Neighbors Classification
+\item Support Vector Machine Classification
+\end{enumerate}
+
+\subsection{Multiple Linear Regression}
+Since the exact delay time of each flight is given in the raw data, we find it interesting to estimate the exact flight delay time to the minute by implementing Multiple Linear Regression.
+
+\subsection{Prediction Accuracy Measures}
+We are using the most commonly seen measures of predictive accuracy to evaluate how good our models are.
+\begin{enumerate}
+\itemsep0em
+\item Mean Absolute Error
+\item Mean Square Error
+\item Mean Absolute Percentage Error
+\end{enumerate}
+The above listed measures of predictive accuracy might be altered based on the analysis results.
+
+\section{Visualization}
+\label{visualization}
+Our main visualization method would be the bar chart describing the delay time of different airlines and airports and delay probability of different airlines and airports.
+
+During pre-processing, 2D plots would be shown to explain the correlation between two variables.
+
+The final result will be shown through a map with the Core 30 airports labeled. We will annotate the airports with different bubble colors, shapes and sizes to explain the delay conditions and severity.
+
+\section{Source Code}
+\label{sourcecode}
+Our code will be stored in the \href{https://github.com/xiomarag/DataMining380L}{DataMining380L} GitHub repository.
+\bibliography{example_paper}
+\bibliographystyle{icml2021}
+
+\end{document}
+
+
+% This document was modified from the file originally made available by
+% Pat Langley and Andrea Danyluk for ICML-2K. This version was created
+% by Iain Murray in 2018, and modified by Alexandre Bouchard in
+% 2019 and 2021. Previous contributors include Dan Roy, Lise Getoor and Tobias
+% Scheffer, which was slightly modified from the 2010 version by
+% Thorsten Joachims & Johannes Fuernkranz, slightly modified from the
+% 2009 version by Kiri Wagstaff and Sam Roweis's 2008 version, which is
+% slightly modified from Prasad Tadepalli's 2007 version which is a
+% lightly changed version of the previous year's version by Andrew
+% Moore, which was in turn edited from those of Kristian Kersting and
+% Codrina Lauth. Alex Smola contributed to the algorithmic style files.
